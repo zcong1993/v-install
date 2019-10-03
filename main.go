@@ -42,13 +42,13 @@ func main() {
 
 	if !serviceExists {
 		core.InstallV2ray()
+		config := core.GenerateDefaultConfig()
+		cfg, err := core.BuildV2rayConfig(config)
+		core.Failed(err, cfg)
+		fmt.Println("Writing config...")
+		core.PutConfig(ConfigPath, cfg)
+		fmt.Println("Starting service...")
+		core.StartService(ServiceName)
 	}
-	config := core.GenerateDefaultConfig()
-	cfg, err := core.BuildV2rayConfig(config)
-	core.Failed(err, cfg)
-	fmt.Println("Writing config...")
-	core.PutConfig(ConfigPath, cfg)
-	fmt.Println("Starting service...")
-	core.StartService(ServiceName)
 	core.PrintByPath(ConfigPath)
 }
