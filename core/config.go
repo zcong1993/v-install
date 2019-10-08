@@ -69,6 +69,14 @@ func PutConfig(filePath string, data []byte) {
 	Failed(err, data)
 }
 
+func SetupConfig(configPath string) {
+	config := GenerateDefaultConfig()
+	cfg, err := BuildV2rayConfig(config)
+	Failed(err, cfg)
+	fmt.Println("Writing config...")
+	PutConfig(configPath, cfg)
+}
+
 const tplString = `
 {
   "inbounds": [

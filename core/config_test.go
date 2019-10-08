@@ -12,3 +12,7 @@ func TestPrintConfig(t *testing.T) {
 	cfg := ParseConfigByte(cfgData)
 	PrintConfig(cfg)
 }
+
+func TestPutConfig(t *testing.T) {
+	PutConfig("./test.json", []byte("[]"))
+}

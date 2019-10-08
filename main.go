@@ -12,9 +12,20 @@ const ServiceName = "v2ray"
 const ConfigPath = "/etc/v2ray/config.json"
 
 func main() {
-	var install bool
+	var (
+		install bool
+		update  bool
+		help    bool
+	)
+	flag.BoolVar(&help, "help", false, "If need show help.")
 	flag.BoolVar(&install, "install", false, "If install v2ray.")
+	flag.BoolVar(&update, "update", false, "If update config.")
 	flag.Parse()
+
+	if help {
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
 
 	if !core.IsLinux() {
 		core.End("Only support Linux.")
@@ -42,13 +53,16 @@ func main() {
 
 	if !serviceExists {
 		core.InstallV2ray()
-		config := core.GenerateDefaultConfig()
-		cfg, err := core.BuildV2rayConfig(config)
-		core.Failed(err, cfg)
-		fmt.Println("Writing config...")
-		core.PutConfig(ConfigPath, cfg)
+		core.SetupConfig(ConfigPath)
 		fmt.Println("Starting service...")
 		core.StartService(ServiceName)
 	}
+
+	if update {
+		core.SetupConfig(ConfigPath)
+		fmt.Println("Restarting service...")
+		core.RestartService(ServiceName)
+	}
+
 	core.PrintByPath(ConfigPath)
 }

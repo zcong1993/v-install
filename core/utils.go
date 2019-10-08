@@ -50,6 +50,11 @@ func StartService(name string) {
 	Failed(err, nil)
 }
 
+func RestartService(name string) {
+	_, err := ExecCmd("service", name, "restart")
+	Failed(err, nil)
+}
+
 func End(message string) {
 	fmt.Println(message)
 	os.Exit(0)
