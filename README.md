@@ -5,6 +5,24 @@
 
 > v2ray installer
 
+## Install
+
+```bash
+$ BINDIR=/usr/local/bin bash <(curl -L -s https://raw.githubusercontent.com/zcong1993/v-install/master/install.sh)
+```
+
+## Setup v2ray
+
+```bash
+$ v-install -install
+```
+
+## Show config
+
+```bash
+$ v-install
+```
+
 ## License
 
 MIT &copy; zcong1993
