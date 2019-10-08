@@ -1,8 +1,10 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"runtime"
@@ -66,4 +68,20 @@ func GeneratePassword(l uint) string {
 		return id[:l]
 	}
 	return id
+}
+
+func GetPublicIp() (string, error) {
+	defaultIp := "0.0.0.0"
+	resp, err := http.Get("http://httpbin.org/ip")
+	if err != nil {
+		return defaultIp, err
+	}
+	defer resp.Body.Close()
+	var res IpRes
+	err = json.NewDecoder(resp.Body).Decode(&res)
+	if err != nil {
+		return defaultIp, err
+	}
+	tmpArr := strings.Split(res.Origin, ",")
+	return tmpArr[0], nil
 }

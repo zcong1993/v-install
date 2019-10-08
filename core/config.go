@@ -42,15 +42,21 @@ func ParseConfigByte(data []byte) *V2rayConfig {
 }
 
 func PrintConfig(cfg *V2rayConfig) {
+	ip, err := GetPublicIp()
+	if err != nil {
+		fmt.Printf("warn: get ip error %s\n\n", err.Error())
+	}
 	for _, inbound := range cfg.Inbounds {
 		if inbound.Protocol == "vmess" {
 			fmt.Println("-------------------------------------------")
+			fmt.Printf("IP: %s\n", ip)
 			fmt.Printf("Type: %s\n", inbound.Protocol)
 			fmt.Printf("Port: %d\n", inbound.Port)
 			// clients length > 0
 			fmt.Printf("ID: %s\n", inbound.Settings.Clients[0].ID)
 		} else if inbound.Protocol == "shadowsocks" {
 			fmt.Println("-------------------------------------------")
+			fmt.Printf("IP: %s\n", ip)
 			fmt.Printf("Type: %s\n", inbound.Protocol)
 			fmt.Printf("Port: %d\n", inbound.Port)
 			fmt.Printf("Method: %s\n", inbound.Settings.Method)

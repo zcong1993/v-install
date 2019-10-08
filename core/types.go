@@ -22,3 +22,7 @@ type Inbound struct {
 type V2rayConfig struct {
 	Inbounds []Inbound `json:"inbounds"`
 }
+
+type IpRes struct {
+	Origin string `json:"origin"`
+}
