@@ -1,6 +1,8 @@
 package core
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPrintConfig(t *testing.T) {
 	cfgData, _ := BuildV2rayConfig(&Config{
@@ -8,6 +10,9 @@ func TestPrintConfig(t *testing.T) {
 		VmessUUID:           "xsxscd",
 		ShadowsocksPassword: "test-pass",
 		ShadowsocksPort:     20002,
+		VmessWsPort:         20003,
+		VmessWsUUID:         "test-uuid",
+		VmessWsPath:         "/test-path",
 	})
 	cfg := ParseConfigByte(cfgData)
 	PrintConfig(cfg)

@@ -16,6 +16,9 @@ func GenerateDefaultConfig() *Config {
 		VmessPort:           20001,
 		ShadowsocksPassword: GeneratePassword(8),
 		ShadowsocksPort:     20002,
+		VmessWsUUID:         GeneratePassword(100),
+		VmessWsPort:         20003,
+		VmessWsPath:         "/" + GeneratePassword(5),
 	}
 }
 
@@ -52,6 +55,10 @@ func PrintConfig(cfg *V2rayConfig) {
 			fmt.Printf("IP: %s\n", ip)
 			fmt.Printf("Type: %s\n", inbound.Protocol)
 			fmt.Printf("Port: %d\n", inbound.Port)
+			if inbound.StreamSettings.Network != "" {
+				fmt.Printf("Network: %s\n", inbound.StreamSettings.Network)
+				fmt.Printf("WsPath: %s\n", inbound.StreamSettings.WsSettings.Path)
+			}
 			// clients length > 0
 			fmt.Printf("ID: %s\n", inbound.Settings.Clients[0].ID)
 		} else if inbound.Protocol == "shadowsocks" {
@@ -97,6 +104,26 @@ const tplString = `
             "alterId": 64
           }
         ]
+      }
+    },
+	{
+      "port": {{ .VmessWsPort }},
+      "listen": "0.0.0.0",
+      "tag": "vmess-ws",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "{{ .VmessWsUUID }}",
+            "alterId": 64
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "{{ .VmessWsPath }}"
+        }
       }
     },
     {
