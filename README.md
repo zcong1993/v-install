@@ -17,6 +17,12 @@ $ BINDIR=/usr/local/bin bash <(curl -L -s https://raw.githubusercontent.com/zcon
 $ v-install -install
 ```
 
+## Update config
+
+```bash
+$ v-install -update
+```
+
 ## Show config
 
 ```bash
