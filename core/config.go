@@ -61,6 +61,7 @@ func PrintConfig(cfg *V2rayConfig) {
 			}
 			// clients length > 0
 			fmt.Printf("ID: %s\n", inbound.Settings.Clients[0].ID)
+			fmt.Printf("AlertID: %d\n", inbound.Settings.Clients[0].AlterID)
 		} else if inbound.Protocol == "shadowsocks" {
 			fmt.Println("-------------------------------------------")
 			fmt.Printf("IP: %s\n", ip)
