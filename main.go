@@ -38,6 +38,13 @@ func main() {
 	fmt.Printf("service running: %v\n", serviceRunning)
 
 	if serviceRunning {
+		if update {
+			core.SetupConfig(ConfigPath)
+			fmt.Println("Restarting service...")
+			core.RestartService(ServiceName)
+			core.PrintByPath(ConfigPath)
+			os.Exit(0)
+		}
 		fmt.Println("Already running.")
 		core.PrintByPath(ConfigPath)
 		os.Exit(0)
@@ -56,12 +63,6 @@ func main() {
 		core.SetupConfig(ConfigPath)
 		fmt.Println("Starting service...")
 		core.StartService(ServiceName)
-	}
-
-	if update {
-		core.SetupConfig(ConfigPath)
-		fmt.Println("Restarting service...")
-		core.RestartService(ServiceName)
 	}
 
 	core.PrintByPath(ConfigPath)
