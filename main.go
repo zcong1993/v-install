@@ -16,10 +16,12 @@ func main() {
 		install bool
 		update  bool
 		help    bool
+		bbr     bool
 	)
 	flag.BoolVar(&help, "help", false, "If need show help.")
 	flag.BoolVar(&install, "install", false, "If install v2ray.")
 	flag.BoolVar(&update, "update", false, "If update config.")
+	flag.BoolVar(&bbr, "bbr", false, "If enable bbr.")
 	flag.Parse()
 
 	if help {
@@ -29,6 +31,11 @@ func main() {
 
 	if !core.IsLinux() {
 		core.End("Only support Linux.")
+	}
+
+	if bbr {
+		core.EnableBbr()
+		os.Exit(0)
 	}
 
 	serviceExists := core.CheckServiceExists(ServiceName)

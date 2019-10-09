@@ -10,3 +10,10 @@ func InstallV2ray() {
 	out, err = ExecCmd("bash", "go.sh")
 	Failed(err, out)
 }
+
+func EnableBbr() {
+	fmt.Println("Enable bbr...")
+	out, err := ExecCmd("bash", "-c", BbrScript)
+	Failed(err, out)
+	fmt.Println(string(out))
+}
