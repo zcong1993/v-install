@@ -1,6 +1,7 @@
 package core
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -84,4 +85,13 @@ func GetPublicIp() (string, error) {
 	}
 	tmpArr := strings.Split(res.Origin, ",")
 	return tmpArr[0], nil
+}
+
+func GenerateSSLink(inbound Inbound, ip string) string {
+	if inbound.Protocol != "shadowsocks" {
+		return ""
+	}
+	auth := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", inbound.Settings.Method, inbound.Settings.Password)))
+	link := fmt.Sprintf("ss://%s@%s:%d", auth, ip, inbound.Port)
+	return link
 }

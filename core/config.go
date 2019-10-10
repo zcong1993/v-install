@@ -69,6 +69,7 @@ func PrintConfig(cfg *V2rayConfig) {
 			fmt.Printf("Port: %d\n", inbound.Port)
 			fmt.Printf("Method: %s\n", inbound.Settings.Method)
 			fmt.Printf("Password: %s\n", inbound.Settings.Password)
+			fmt.Printf("SSLink: %s\n", GenerateSSLink(inbound, ip))
 		}
 	}
 }

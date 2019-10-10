@@ -10,28 +10,30 @@ type Config struct {
 	VmessWsPath         string
 }
 
+type Inbound struct {
+	Port     int    `json:"port"`
+	Protocol string `json:"protocol"`
+	Settings struct {
+		Method   string `json:"method"`
+		Password string `json:"password"`
+		Clients  []struct {
+			ID      string `json:"id"`
+			Level   int    `json:"level"`
+			AlterID int    `json:"alterId"`
+		} `json:"clients"`
+	} `json:"settings"`
+	Listen         string `json:"listen,omitempty"`
+	Tag            string `json:"tag,omitempty"`
+	StreamSettings struct {
+		Network    string `json:"network"`
+		WsSettings struct {
+			Path string `json:"path"`
+		} `json:"wsSettings"`
+	} `json:"streamSettings,omitempty"`
+}
+
 type V2rayConfig struct {
-	Inbounds []struct {
-		Port     int    `json:"port"`
-		Protocol string `json:"protocol"`
-		Settings struct {
-			Method   string `json:"method"`
-			Password string `json:"password"`
-			Clients  []struct {
-				ID      string `json:"id"`
-				Level   int    `json:"level"`
-				AlterID int    `json:"alterId"`
-			} `json:"clients"`
-		} `json:"settings"`
-		Listen         string `json:"listen,omitempty"`
-		Tag            string `json:"tag,omitempty"`
-		StreamSettings struct {
-			Network    string `json:"network"`
-			WsSettings struct {
-				Path string `json:"path"`
-			} `json:"wsSettings"`
-		} `json:"streamSettings,omitempty"`
-	} `json:"inbounds"`
+	Inbounds  []Inbound `json:"inbounds"`
 	Outbounds []struct {
 		Protocol string `json:"protocol"`
 		Settings struct {
